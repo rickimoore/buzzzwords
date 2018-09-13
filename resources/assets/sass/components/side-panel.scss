@@ -1,0 +1,118 @@
+.side-panel--container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 80px;
+  z-index: 99999;
+}
+
+.side-panel{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 400px;
+  margin-left: -320px;
+  background-color: #FFFFA8;
+  @include breezy-transition(all, 1s);
+  @include flex();
+  @include flex-column();
+  justify-content: center;
+  align-items: center;
+  .panel--plate {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .history--container {
+    position: absolute;
+    bottom: 25px;
+  }
+  .history--container .history--table{
+    min-height: 100px;
+    max-height: 600px;
+    p {
+      text-align: left;
+      border-bottom: 2px solid $border-color;
+      padding: 15px;
+    }
+    ul {
+      li {
+        padding: 15px;
+        font-size: 12px;
+        text-align: left;
+        position: relative;
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+/Edge */
+        user-select: none; /* Standard */
+        overflow: hidden;
+      }
+      li:hover {
+        opacity: .8;
+        cursor: pointer;
+      }
+      > * + * {
+        border-top: 1px solid $border-color;
+      }
+    }
+    .clip-item-note{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: black;
+      padding: 5px;
+      color: white;
+      border-radius: 5px;
+    }
+  }
+}
+
+.side-panel--active {
+  margin-left: 0;
+}
+
+.crawler-ghost-bar {
+  width: 100%;
+  height: 70%;
+  @include flex();
+  @include flex-column();
+  justify-content: flex-end;
+  position: relative;
+  z-index: 99;
+  pointer-events: none;
+  .ghost-bar {
+    height: 75px;
+    border-top: 1px solid #E0DC7C;
+    border-bottom: 1px solid #E0DC7C;
+  }
+}
+
+.panel--plate{
+  width: 100%;
+  @include flex();
+  @include flex-row(nowrap);
+  justify-content: center;
+  padding-top: 2rem;
+  button{
+    position: absolute;
+    right: 15px;
+    border-radius: 5px;
+    padding: 5px;
+    img {
+      width: 50%;
+    }
+  }
+  img {
+    height: 50px;
+  }
+}
+.history--container {
+  width: 100%;
+  padding: 0px 15px;
+  .history--table{
+    width: 100%;
+    background-color: $body-dark-bg;
+  }
+}

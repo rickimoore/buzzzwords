@@ -1,0 +1,20 @@
+$analytic-shadow: darken(#DDD962, 15%);
+
+
+.bzz--btn {
+  padding: 15px 20px;
+  outline: none;
+}
+
+.clear-wBorder--btn {
+  background-color: transparent;
+  border: 1px solid $analytic-shadow;
+  color: $analytic-shadow;
+}
+
+.clear-wBorder--btn:hover {
+  background-color: black;
+  color: white;
+  border-color: black;
+  cursor: pointer;
+}

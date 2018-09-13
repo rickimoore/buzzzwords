@@ -1,0 +1,34 @@
+.modal--container{
+  @include fixscreen();
+  z-index: 99;
+}
+
+.modal--screen {
+  @include fullscreen();
+  @include flex();
+  @include flex-column();
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.modal--overlay {
+  @include cover();
+  background-color: #5A5A5A;
+  opacity: .4;
+  z-index: 10;
+}
+
+.modal{
+  @include card(1);
+  background-color: $body-bg;
+  max-width: 50%;
+  max-height: 70%;
+  .md-field:after, .md-field:before {
+    background: black;
+  }
+}
+
+.entry--data{
+  padding: 25px;
+}

@@ -1,0 +1,73 @@
+@import "mixins";
+
+.implode-enter-active, .implode-leave-active {
+  @include transition(all, .1s);
+}
+.implode-enter, .implode-leave-to /* .implode-leave-active in <2.1.8 */ {
+  @include transform(scale(.3));
+  opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
+
+.fade--backdrop-enter-active, .fade--backdrop-leave-active {
+  transition: opacity .5s;
+  opacity: .4
+}
+.fade--backdrop-enter, .fade--backdrop-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
+
+.slideUp-enter-active, .slideUp-leave-active {
+  @include breezy-transition(all, .8s);
+  opacity: 1;
+  @include transform(translateY(0));
+}
+.slideUp-enter, .slideUp-leave-to /* .slideUp-leave-active in <2.1.8 */ {
+  opacity: 0;
+  @include transform(translateY(500px));
+}
+
+.shortSlideUp-enter-active, .shortSlideUp-leave-active {
+  @include breezy-transition(all, .8s);
+  opacity: 1;
+  @include transform(translateY(0));
+}
+.shortSlideUp-enter, .shortSlideUp-leave-to /* .shortSlideUp-leave-active in <2.1.8 */ {
+  opacity: 0;
+  @include transform(translateY(50px));
+}
+
+.shortSlideDown-enter-active, .shortSlideDown-leave-active {
+  @include breezy-transition(all, .5s);
+  @include transform(translateX(0));
+}
+.shortSlideDown-enter, .shortSlideDown-leave-to /* .slideUp-leave-active in <2.1.8 */ {
+  @include transform(translateY(-100%));
+}
+
+.list-enter-active, .list-leave-active {
+  transition: all .5s;
+  opacity: 1;
+  @include transform(translateY(0));
+}
+.list-enter, .list-leave-to /* .list-leave-active in <2.1.8 */ {
+  opacity: 0;
+  @include transform(translateY(50px));
+}
+
+
+.scaleZoom-enter-active, .scaleZoom-leave-active {
+  @include transform(scale(1));
+  opacity: 1;
+}
+.scaleZoom-enter, .scaleZoom-leave-to /* .scaleZoom-leave-active in <2.1.8 */ {
+  @include transform(scale(.8));
+  opacity: 0;
+}
+
