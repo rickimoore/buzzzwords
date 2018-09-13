@@ -56,7 +56,6 @@
         },
         orderedBucket: function () {
           let self = this;
-
           if(this.bucket === 'empty') {
             return null;
           }

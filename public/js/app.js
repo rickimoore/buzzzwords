@@ -68434,7 +68434,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     orderedBucket: function orderedBucket() {
       var self = this;
-
       if (this.bucket === 'empty') {
         return null;
       }
