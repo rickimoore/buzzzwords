@@ -1,16 +1,18 @@
 <?php
 
-//if (isset($_SERVER['APP_SECRETS'])) {
-//    $secrets = json_decode(file_get_contents($_SERVER['APP_SECRETS']), true);
-//    $s3 = [
-//        'driver' => 's3',
-//        'key' => $secrets['CUSTOM']['AWS_KEY'],
-//        'secret' => $secrets['CUSTOM']['AWS_SECRET'],
-//        'region' => $secrets['CUSTOM']['AWS_REGION'],
-//        'bucket' => $secrets['CUSTOM']['AWS_BUCKET'],
-//    ];
-//}
-dd(getenv('CLEARDB_DATABASE_URL'));
+if(getenv('CLEARDB_DATABASE_URL')){
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
+    $host = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $database = substr($url["path"], 1);
+} else {
+    $host = env('DB_HOST', '127.0.0.1');
+    $username = env('DB_USERNAME', 'forge');
+    $password = env('DB_PASSWORD', '');
+    $database = env('DB_DATABASE', 'forge');
+}
 return [
 
     /*
