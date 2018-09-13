@@ -1,5 +1,16 @@
 <?php
 
+if (isset($_SERVER['APP_SECRETS'])) {
+    $secrets = json_decode(file_get_contents($_SERVER['APP_SECRETS']), true);
+    $s3 = [
+        'driver' => 's3',
+        'key' => $secrets['CUSTOM']['AWS_KEY'],
+        'secret' => $secrets['CUSTOM']['AWS_SECRET'],
+        'region' => $secrets['CUSTOM']['AWS_REGION'],
+        'bucket' => $secrets['CUSTOM']['AWS_BUCKET'],
+    ];
+}
+
 return [
 
     /*

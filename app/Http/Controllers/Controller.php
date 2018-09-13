@@ -31,6 +31,7 @@ class Controller extends BaseController
 
     public function index ()
     {
+        dd(getenv('CLEARDB_DATABASE_URL'));
         return view('welcome', ['offers' => JobOffer::fetchValidOffers()]);
     }
 
