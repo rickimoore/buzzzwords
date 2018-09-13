@@ -8,8 +8,8 @@
     <title>Buzzword</title>
 
     <!-- Fonts -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/vue-material.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/vue-material.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script>
       window.data = <?php echo json_encode([
@@ -23,5 +23,5 @@
     <job-offer-log :offers="$store.state.offers"></job-offer-log>
 </div>
 </body>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ secure_asset('js/app.js') }}"></script>
 </html>
