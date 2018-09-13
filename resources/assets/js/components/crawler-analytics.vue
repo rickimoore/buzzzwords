@@ -10,7 +10,7 @@
                 :key="$index">
                 <div class="group--word">{{item.word}}</div> <div class="group--count">{{item.count}}</div></li>
         </ul>
-        <button class="bzz--btn" v-if="orderedBucket.length > count" @click="count += count">See More ( {{truncatedBucket.length}} /  {{orderedBucket.length}} )</button>
+        <button class="bzz--btn" v-if="orderedBucket && orderedBucket.length > count" @click="count += count">See More ( {{truncatedBucket.length}} /  {{orderedBucket.length}} )</button>
     </div>
 </template>
 <script>

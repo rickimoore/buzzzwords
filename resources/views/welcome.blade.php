@@ -8,8 +8,8 @@
         <title>Buzzword</title>
 
         <!-- Fonts -->
-        <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ secure_asset('css/vue-material.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/vue-material.min.css') }}" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
         <script>
           window.data = <?php echo json_encode([
@@ -22,11 +22,11 @@
             <crawler-nav></crawler-nav>
             <crawler-sidepanel :history="$store.state.history"></crawler-sidepanel>
             <crawler-input></crawler-input>
-            <div class="analytics--container">
-                <crawler-analytics v-if="$store.state.classifications.length > 0" :data="$store.state.classifications"></crawler-analytics>
-                <job-offer-preview :offers="$store.state.offers"></job-offer-preview>
+            <div v-if="$store.state.classifications.length > 0 || $store.state.offers && $store.state.offers.length > 0" class="analytics--container">
+                <crawler-analytics v-if="$store.state.classifications.length > 0"  :data="$store.state.classifications"></crawler-analytics>
+                <job-offer-preview v-if="$store.state.offers.length > 0" :offers="$store.state.offers"></job-offer-preview>
             </div>
         </div>
     </body>
-    <script src="{{ secure_asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </html>

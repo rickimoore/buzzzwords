@@ -68519,7 +68519,7 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm.orderedBucket.length > _vm.count
+    _vm.orderedBucket && _vm.orderedBucket.length > _vm.count
       ? _c(
           "button",
           {
