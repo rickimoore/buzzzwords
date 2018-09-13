@@ -10,7 +10,7 @@
 //        'bucket' => $secrets['CUSTOM']['AWS_BUCKET'],
 //    ];
 //}
-
+dd(getenv('CLEARDB_DATABASE_URL'));
 return [
 
     /*
