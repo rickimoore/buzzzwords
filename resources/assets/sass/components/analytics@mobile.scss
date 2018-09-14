@@ -1,0 +1,18 @@
+@media (max-width: 375px) {
+  .analytic--group li {
+    font-size: 12px;
+  }
+  .analytic--group .highlight {
+    font-size: 22px;
+  }
+  .analytic--group .important {
+    font-size: 18px;
+  }
+  .analytic--group .group--count {
+    display: none;
+  }
+  .analytic--group .group--word span {
+    display: block;
+    font-size: 10px;
+  }
+}

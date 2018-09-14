@@ -27,3 +27,9 @@
     }
   }
 }
+
+.nav--mobile-btn{
+  display: none;
+}
+
+@import "navigation@mobile";

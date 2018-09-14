@@ -42,6 +42,9 @@
     position: relative;
     z-index: 99;
     border: 1px solid #DDD962;
+    span {
+      display: none;
+    }
   }
   .group--count {
     position: absolute;
@@ -62,3 +65,5 @@
     font-size: 28px;
   }
 }
+
+@import "analytics@mobile";

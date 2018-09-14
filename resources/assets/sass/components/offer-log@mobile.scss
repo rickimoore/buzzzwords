@@ -1,0 +1,15 @@
+@media (max-width: 375px) {
+  .analytics--container {
+    padding: 10px;
+    padding-top: 45px;
+  }
+  .log--results  {
+    align-items: center;
+    justify-content: center;
+    .result {
+      width: 100%!important;
+      margin-bottom: 15px;
+      margin-right: 0;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+@media (max-width: 375px) {
+  .crawler--nav {
+    position: relative;
+    z-index: 999999;
+  }
+  .crawler--nav .nav--logo {
+    left: $border-left-mobile;
+    top: 20px;
+  }
+  .crawler--nav .nav {
+    display: none;
+  }
+  .nav--mobile-btn {
+    display: block;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+  }
+}
