@@ -13,11 +13,15 @@ export const store = new Vuex.Store({
     bin: [],
     offers: '',
     isActiveModal: false,
+    isSidePanelActive: false,
     modal: ''
   },
   mutations: {
     appendToClassList (state, grade) {
       state.classifications.push(grade)
+    },
+    togglePanel (state, data) {
+      state.isSidePanelActive = data;
     },
     appendToHistory (state, data) {
       state.history.push(data)

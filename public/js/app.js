@@ -63982,11 +63982,15 @@ var store = new __WEBPACK_IMPORTED_MODULE_2_vuex__["a" /* default */].Store({
     bin: [],
     offers: '',
     isActiveModal: false,
+    isSidePanelActive: false,
     modal: ''
   },
   mutations: {
     appendToClassList: function appendToClassList(state, grade) {
       state.classifications.push(grade);
+    },
+    togglePanel: function togglePanel(state, data) {
+      state.isSidePanelActive = data;
     },
     appendToHistory: function appendToHistory(state, data) {
       state.history.push(data);
@@ -66893,8 +66897,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    toggleMenu: function toggleMenu() {
+      this.$store.commit('togglePanel', !this.$store.state.isSidePanelActive);
+    }
+  }
+});
 
 /***/ }),
 /* 173 */
@@ -66904,27 +66917,40 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("nav", { staticClass: "crawler--nav" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c("div", { staticClass: "nav--mobile-btn" }, [
+      _c("img", {
+        attrs: { src: "/image/icons/menu.svg", alt: "menu" },
+        on: { click: _vm.toggleMenu }
+      })
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("nav", { staticClass: "crawler--nav" }, [
-      _c("div", { staticClass: "nav--logo" }, [
-        _c("img", {
-          attrs: { src: "/image/logo/buzzword.png", alt: "buzzword.png" }
-        })
-      ]),
+    return _c("div", { staticClass: "nav--logo" }, [
+      _c("img", {
+        attrs: { src: "/image/logo/buzzword.png", alt: "buzzword.png" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "nav" }, [
+      _c("li", [_vm._v("Home")]),
       _vm._v(" "),
-      _c("ul", { staticClass: "nav" }, [
-        _c("li", [_vm._v("Home")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("About")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Contact")])
-      ])
+      _c("li", [_vm._v("About")]),
+      _vm._v(" "),
+      _c("li", [_vm._v("Contact")])
     ])
   }
 ]
@@ -67028,13 +67054,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var ClipboardJS = __webpack_require__(176);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['history'],
+  props: ['history', 'state'],
   data: function data() {
     return {
-      isSidePanelActive: false,
       isScrollSidePanel: false,
       isCopied: false,
       copiedTarget: null,
@@ -67060,6 +67108,9 @@ var ClipboardJS = __webpack_require__(176);
       setTimeout(function () {
         self.isCopied = false;
       }, 1500);
+    },
+    togglePanel: function togglePanel() {
+      this.$store.commit('togglePanel', !this.$store.state.isSidePanelActive);
     }
   }
 });
@@ -68019,10 +68070,7 @@ var render = function() {
   return _c("div", { staticClass: "side-panel--container" }, [
     _c(
       "div",
-      {
-        staticClass: "side-panel",
-        class: { "side-panel--active": _vm.isSidePanelActive }
-      },
+      { staticClass: "side-panel", class: { "side-panel--active": _vm.state } },
       [
         _c("div", { staticClass: "panel--plate" }, [
           _vm.isScrollSidePanel || _vm.history.length > 0
@@ -68030,11 +68078,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "bzz--btn clear-wBorder--btn",
-                  on: {
-                    click: function($event) {
-                      _vm.isSidePanelActive = !_vm.isSidePanelActive
-                    }
-                  }
+                  on: { click: _vm.togglePanel }
                 },
                 [
                   _c("img", {
@@ -68046,7 +68090,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("transition", { attrs: { name: "fade" } }, [
-          _vm.isSidePanelActive
+          _vm.state
             ? _c("div", { staticClass: "side-menu--container" }, [
                 _c("ul", [
                   _c("li", [_vm._v("Home")]),
@@ -68060,7 +68104,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("transition", { attrs: { name: "fade" } }, [
-          _vm.history.length > 0 && _vm.isSidePanelActive
+          _vm.history.length > 0 && _vm.state
             ? _c("div", { staticClass: "history--container" }, [
                 _c("div", { staticClass: "history--table" }, [
                   _c("p", [_vm._v("Search History:")]),
@@ -68107,10 +68151,74 @@ var render = function() {
         ])
       ],
       1
-    )
+    ),
+    _vm._v(" "),
+    _vm.state
+      ? _c("div", { staticClass: "splash-panel" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.history.length > 0 && _vm.state
+            ? _c("div", { staticClass: "history--container" }, [
+                _c("div", { staticClass: "history--table" }, [
+                  _c("p", [_vm._v("Search History:")]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    _vm._l(_vm.history, function(item, $index) {
+                      return _c(
+                        "li",
+                        {
+                          key: $index,
+                          staticClass: "clip-item",
+                          attrs: { "data-clipboard-text": item.link },
+                          on: {
+                            click: function($event) {
+                              _vm.copyToBoard($index)
+                            }
+                          }
+                        },
+                        [
+                          _c("span", [_vm._v(_vm._s(item.link))]),
+                          _vm._v(" "),
+                          _c(
+                            "transition",
+                            { attrs: { name: "shortSlideUp" } },
+                            [
+                              _vm.isCopied && _vm.copiedTarget === $index
+                                ? _c(
+                                    "span",
+                                    { staticClass: "clip-item-note" },
+                                    [_vm._v("Copied!")]
+                                  )
+                                : _vm._e()
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    })
+                  )
+                ])
+              ])
+            : _vm._e()
+        ])
+      : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", [
+      _c("li", [_vm._v("Home")]),
+      _vm._v(" "),
+      _c("li", [_vm._v("About")]),
+      _vm._v(" "),
+      _c("li", [_vm._v("Contact")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -68392,6 +68500,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
@@ -68507,7 +68616,8 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "group--word" }, [
-                  _vm._v(_vm._s(item.word))
+                  _vm._v(_vm._s(item.word) + " "),
+                  _c("span", [_vm._v("( " + _vm._s(item.count) + " )")])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "group--count" }, [
