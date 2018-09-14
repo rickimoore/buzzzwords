@@ -20,7 +20,7 @@
     <body>
         <div id="app" class="flex-center position-ref full-height">
             <crawler-nav></crawler-nav>
-            <crawler-sidepanel :history="$store.state.history"></crawler-sidepanel>
+            <crawler-sidepanel :state="$store.state.isSidePanelActive" :history="$store.state.history"></crawler-sidepanel>
             <crawler-input></crawler-input>
             <div v-if="$store.state.classifications.length > 0 || $store.state.offers && $store.state.offers.length > 0" class="analytics--container">
                 <crawler-analytics v-if="$store.state.classifications.length > 0"  :data="$store.state.classifications"></crawler-analytics>
