@@ -8,7 +8,8 @@
             <li v-for="(item, $index) in truncatedBucket"
                 :class="{'highlight': orderedBucket.length > 9 && $index < 9, 'important': orderedBucket.length > 19 && $index > 9 && $index < 19}"
                 :key="$index">
-                <div class="group--word">{{item.word}}</div> <div class="group--count">{{item.count}}</div></li>
+                <div class="group--word">{{item.word}} <span>( {{item.count}} )</span></div>
+                <div class="group--count">{{item.count}}</div></li>
         </ul>
         <button class="bzz--btn" v-if="orderedBucket && orderedBucket.length > count" @click="count += count">See More ( {{truncatedBucket.length}} /  {{orderedBucket.length}} )</button>
     </div>
