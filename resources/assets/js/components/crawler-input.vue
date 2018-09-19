@@ -5,8 +5,16 @@
             <p v-if="isError">Please enter valid url.</p>
         </div>
         <div class="crawler--input-group">
-            <input type="text" placeholder="Paste your job offer here..." v-model="form.link">
-            <button :class="{'active--button': form.link}" @click="submitForm">submit</button>
+            <input type="text" placeholder="Paste your job offer here..." @paste="addToBucket" v-model="form.link">
+            <button :class="{'active--button': bucket.length > 0 || form.link}" @click="submitBucket">submit</button>
+        </div>
+        <div class="crawler--input-list">
+            <div class="input--item" v-for="link in bucket">
+                <div class="item--link">{{link.slice(0, 25) + '...'}}</div>
+                <div class="item--option">
+                    ( x )
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -18,40 +26,54 @@
             form: {
               link: ''
             },
+            bucket: [],
             isError: false
           }
         },
       methods: {
-        submitForm: function () {
+        submitBucket: function () {
+          this.bucket.forEach(($item) => {
+            this.submitForm($item);
+          })
+        },
+        submitForm: function ($link) {
           this.isError = false;
-          if(!this.isUrl(this.form.link)){
+          if(!this.isUrl($link)){
             return this.isError = true;
           }
 
-          let indexHistory = this.isInHistory(this.form.link);
+          let indexHistory = this.isInHistory($link);
           if(indexHistory !== null){
             return this.persistFromHistory(indexHistory)
           }
           
           
-            let self = this;
-            axios.post('/analyze', this.form).then(function (response) {
+            axios.post('/analyze', {link: $link}).then((response) => {
               let $data = response.data.data;
 
               if(response.data.status === 'success') {
 
-                let count = self.$store.state.history.length;
+                let count = this.$store.state.history.length;
 
-                self.$store.commit('appendToHistory', {'place': count, 'link': self.form.link, 'data': $data});
-                self.$store.commit('appendToClassList', $data);
-                self.$store.commit('appendToBin', self.form.link)
+                this.$store.commit('appendToHistory', {'place': count, 'link': $link, 'data': $data});
+                this.$store.commit('appendToClassList', $data);
+                this.$store.commit('appendToBin', $link)
 
-                self.form.link = '';
+                this.bucket.splice(this.bucket.findIndex(($item) => $item === $link), 1)
               }
 
             }).catch(function (error) {
               console.log('error recieved', error)
             })
+        },
+        addToBucket: function () {
+          setTimeout(() => {
+            if(this.bucket.indexOf(this.form.link, 0) > -1){
+              return this.form.link = '';
+            }
+            this.bucket.push(this.form.link);
+            this.form.link = '';
+          }, 500);
         },
         persistFromHistory: function (index) {
           let history = this.$store.state.history[index];

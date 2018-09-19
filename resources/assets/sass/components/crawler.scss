@@ -6,6 +6,7 @@
   @include flex();
   @include flex-column();
   justify-content: flex-end;
+  position: relative;
 }
 
 .crawler--cta{
@@ -66,6 +67,30 @@
 
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: #B8B454;
+}
+
+
+.crawler--input-list{
+  position: absolute;
+  left: 0;
+  bottom: -24px;
+  background-color: #E7E36C;
+  padding-left: $border-left-padding;
+  @include flex();
+  @include flex-row(wrap);
+  .input--item {
+    background-color: #FBF780;
+    padding: 2px;
+    font-size: 8px;
+    margin-right: 5px;
+    @include flex();
+    @include flex-row(nowrap);
+    .item--option {
+      border-left: 1px solid #E7E36C;
+      padding-left: 5px;
+      cursor: pointer;
+    }
+  }
 }
 
 @import "crawler@mobile";
