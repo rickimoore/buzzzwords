@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="analytic--container container">
         <div class="analytic--banner">
             <h1><span>{{orderedBucket ? orderedBucket.length : 0}}</span> / <span>{{bucketCount}}</span></h1>
             <button @click="clearCacheHistory" class="bzz--btn clear-wBorder--btn">Clear history</button>
