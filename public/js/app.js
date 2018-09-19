@@ -69051,7 +69051,7 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "result--info" }, [
-                  _c("span", [_vm._v(_vm._s(offer.link.slice(0, 100) + "..."))])
+                  _c("span", [_vm._v(_vm._s(offer.link.slice(0, 80) + "..."))])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "result--date" }, [
@@ -69630,6 +69630,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['offers'],
@@ -69647,7 +69649,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return moment($date).fromNow();
     },
     toShortPreview: function toShortPreview($preview) {
-      return $preview.slice(0, 200) + '...';
+      return $preview.slice(0, 150) + '...';
     }
   }
 });
@@ -69665,49 +69667,51 @@ var render = function() {
     { staticClass: "log--results" },
     _vm._l(_vm.offers, function(offer) {
       return _c("li", { staticClass: "result" }, [
-        _c(
-          "a",
-          {
-            attrs: { href: offer.link, target: "_blank" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.logView(offer)
+        _c("div", { staticClass: "result--card" }, [
+          _c(
+            "a",
+            {
+              attrs: { href: offer.link, target: "_blank" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.logView(offer)
+                }
               }
-            }
-          },
-          [
-            _c("div", { staticClass: "result--header" }, [
-              _c("p", [_vm._v(_vm._s(offer.site))]),
-              _vm._v(" "),
-              _c("span", { staticClass: "meta--data" }, [
-                _vm._v(_vm._s(offer.views) + " views")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "result--data" }, [
-              _c("h2", [_vm._v(_vm._s(offer.title))]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(_vm._s(_vm._f("toShortPreview")(offer.description)))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "result--footer" }, [
-              _c("div", { staticClass: "footer--company" }, [
-                _c("span", [_vm._v(_vm._s(offer.company))]),
-                _vm._v(" - "),
-                _c("span", [_vm._v(_vm._s(offer.location))])
+            },
+            [
+              _c("div", { staticClass: "result--header" }, [
+                _c("p", [_vm._v(_vm._s(offer.site))]),
+                _vm._v(" "),
+                _c("span", { staticClass: "meta--data" }, [
+                  _vm._v(_vm._s(offer.views) + " views")
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "footer--date" }, [
-                _c("span", { staticClass: "meta--data" }, [
-                  _vm._v(_vm._s(_vm._f("dateToMoment")(offer.updated_at)))
+              _c("div", { staticClass: "result--data" }, [
+                _c("h2", [_vm._v(_vm._s(offer.title))]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(_vm._s(_vm._f("toShortPreview")(offer.description)))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "result--footer" }, [
+                _c("div", { staticClass: "footer--company" }, [
+                  _c("span", [_vm._v(_vm._s(offer.company))]),
+                  _vm._v(" - "),
+                  _c("span", [_vm._v(_vm._s(offer.location))])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "footer--date" }, [
+                  _c("span", { staticClass: "meta--data" }, [
+                    _vm._v(_vm._s(_vm._f("dateToMoment")(offer.created_at)))
+                  ])
                 ])
               ])
-            ])
-          ]
-        )
+            ]
+          )
+        ])
       ])
     })
   )
