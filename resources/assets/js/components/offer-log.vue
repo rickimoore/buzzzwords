@@ -31,7 +31,7 @@
                         @click="viewOffer(offer)"
                     >
                         <div class="result--info">
-                            <span>{{offer.link.slice(0, 100) + '...'}}</span>
+                            <span>{{offer.link.slice(0, 80) + '...'}}</span>
                         </div>
                         <div class="result--date">
                             <span>{{offer.created_at | dateToMoment}}</span>
