@@ -96,13 +96,15 @@
   @include flex-row(wrap);
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 25px;
   .result {
-    background-color: $body-bg;
-    @include card(1);
+    padding-right: 15px;
     width: 25%;
-    cursor: pointer;
-    margin-right: 15px;
+    margin-bottom: 25px;
+    .result--card {
+      background-color: $body-bg;
+      @include card(1);
+      cursor: pointer;
+    }
     a > div, > div {
       padding: 15px;
     }
