@@ -1,4 +1,17 @@
-@media (max-width: 375px) {
+@media (max-width: 414px) {
+  .buzz--container {
+    padding: 10px;
+  }
+  .crawler--input-list{
+   padding-left: 20px;
+  }
+  .crawler--input-group input{
+    font-size: 16px;
+  }
+  .analytic--container {
+    padding-top: 25px;
+    margin-bottom: 50px;
+  }
   .analytic--group li {
     font-size: 12px;
   }
