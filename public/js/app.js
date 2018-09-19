@@ -68294,6 +68294,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -68301,38 +68309,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       form: {
         link: ''
       },
+      bucket: [],
       isError: false
     };
   },
   methods: {
-    submitForm: function submitForm() {
+    submitBucket: function submitBucket() {
+      var _this = this;
+
+      this.bucket.forEach(function ($item) {
+        _this.submitForm($item);
+      });
+    },
+    submitForm: function submitForm($link) {
+      var _this2 = this;
+
       this.isError = false;
-      if (!this.isUrl(this.form.link)) {
+      if (!this.isUrl($link)) {
         return this.isError = true;
       }
 
-      var indexHistory = this.isInHistory(this.form.link);
+      var indexHistory = this.isInHistory($link);
       if (indexHistory !== null) {
         return this.persistFromHistory(indexHistory);
       }
 
-      var self = this;
-      axios.post('/analyze', this.form).then(function (response) {
+      axios.post('/analyze', { link: $link }).then(function (response) {
         var $data = response.data.data;
 
         if (response.data.status === 'success') {
 
-          var count = self.$store.state.history.length;
+          var count = _this2.$store.state.history.length;
 
-          self.$store.commit('appendToHistory', { 'place': count, 'link': self.form.link, 'data': $data });
-          self.$store.commit('appendToClassList', $data);
-          self.$store.commit('appendToBin', self.form.link);
+          _this2.$store.commit('appendToHistory', { 'place': count, 'link': $link, 'data': $data });
+          _this2.$store.commit('appendToClassList', $data);
+          _this2.$store.commit('appendToBin', $link);
 
-          self.form.link = '';
+          _this2.bucket.splice(_this2.bucket.findIndex(function ($item) {
+            return $item === $link;
+          }), 1);
         }
       }).catch(function (error) {
         console.log('error recieved', error);
       });
+    },
+    addToBucket: function addToBucket() {
+      var _this3 = this;
+
+      setTimeout(function () {
+        if (_this3.bucket.indexOf(_this3.form.link, 0) > -1) {
+          return _this3.form.link = '';
+        }
+        _this3.bucket.push(_this3.form.link);
+        _this3.form.link = '';
+      }, 500);
     },
     persistFromHistory: function persistFromHistory(index) {
       var history = this.$store.state.history[index];
@@ -68402,6 +68432,7 @@ var render = function() {
         attrs: { type: "text", placeholder: "Paste your job offer here..." },
         domProps: { value: _vm.form.link },
         on: {
+          paste: _vm.addToBucket,
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -68414,12 +68445,28 @@ var render = function() {
       _c(
         "button",
         {
-          class: { "active--button": _vm.form.link },
-          on: { click: _vm.submitForm }
+          class: { "active--button": _vm.bucket.length > 0 || _vm.form.link },
+          on: { click: _vm.submitBucket }
         },
         [_vm._v("submit")]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "crawler--input-list" },
+      _vm._l(_vm.bucket, function(link) {
+        return _c("div", { staticClass: "input--item" }, [
+          _c("div", { staticClass: "item--link" }, [
+            _vm._v(_vm._s(link.slice(0, 25) + "..."))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "item--option" }, [
+            _vm._v("\n                ( x )\n            ")
+          ])
+        ])
+      })
+    )
   ])
 }
 var staticRenderFns = []
@@ -68579,7 +68626,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "analytic--container container" }, [
     _c("div", { staticClass: "analytic--banner" }, [
       _c("h1", [
         _c("span", [
