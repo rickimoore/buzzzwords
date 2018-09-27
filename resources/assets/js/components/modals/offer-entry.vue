@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container modal">
         <div class="entry--data">
             <div class="data--form-group">
                 <md-field>

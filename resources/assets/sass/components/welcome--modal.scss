@@ -1,0 +1,50 @@
+.welcome{
+  width: 50%;
+  height: 60%;
+  padding: 10px;
+  .md-steppers-navigation {
+    display: none;
+  }
+}
+.slide {
+  @include cover();
+  @include flex();
+  @include flex-column();
+  align-items: center;
+  justify-content: flex-end;
+}
+.slide--0 h1{
+  font-size: 3rem;
+}
+.slide--header {
+  width: 100%;
+  height: 10%;
+}
+.slide--container {
+  width: 100%;
+  height: 350px;
+  line-height: 1.2;
+  @include flex();
+  @include flex-center();
+  .md-field {
+    margin-top: 30px;
+    width: 75%;
+  }
+}
+.slide--footer{
+  width: 100%;
+  padding: 10px;
+  @include flex();
+  @include flex-row(wrap);
+  align-items: center;
+  justify-content: center;
+  button {
+    padding: 0;
+    width: 150px;
+    height: 50px;
+    background-color: black!important;
+  }
+  > * + * {
+    margin-left: 15px;
+  }
+}
