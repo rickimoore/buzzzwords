@@ -43,9 +43,6 @@ export const store = new Vuex.Store({
     },
     destroyModal (state, data) {
       state.isActiveModal = false;
-      setTimeout(() => {
-        state.modal = data;
-      }, 500);
     },
     setOffers (state, data) {
       state.offers = data;
