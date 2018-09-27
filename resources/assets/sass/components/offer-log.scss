@@ -118,7 +118,9 @@
     .result--header{
       border-bottom: 1px solid $border-color;
     }
-
+    .result--footer {
+      font-size: 12px;
+    }
     .result--data {
       text-align: left;
       height: 200px;
