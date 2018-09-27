@@ -1,17 +1,17 @@
 <template>
     <div class="analytic--container container">
         <div class="analytic--banner">
-            <h1><span>{{orderedBucket ? orderedBucket.length : 0}}</span> / <span>{{bucketCount}}</span></h1>
+            <h1><span>{{weightedBucket ? weightedBucket.length : 0}}</span> / <span>{{bucketCount}}</span></h1>
             <button @click="clearCacheHistory" class="bzz--btn clear-wBorder--btn">Clear history</button>
         </div>
-        <ul v-if="orderedBucket" class="analytic--group">
+        <ul v-if="weightedBucket" class="analytic--group">
             <li v-for="(item, $index) in truncatedBucket"
-                :class="{'highlight': orderedBucket.length > 9 && $index < 9, 'important': orderedBucket.length > 19 && $index > 9 && $index < 19}"
+                :class="{'highlight': weightedBucket.length > 9 && $index < 9, 'important': weightedBucket.length > 19 && $index > 9 && $index < 19}"
                 :key="$index">
-                <div class="group--word">{{item.word}} <span>( {{item.count}} )</span></div>
-                <div class="group--count">{{item.count}}</div></li>
+                <div class="group--word">{{item.word}}</div>
+            </li>
         </ul>
-        <button class="bzz--btn" v-if="orderedBucket && orderedBucket.length > count" @click="count += count">See More ( {{truncatedBucket.length}} /  {{orderedBucket.length}} )</button>
+        <button class="bzz--btn" v-if="weightedBucket && weightedBucket.length > count" @click="count += count">See More ( {{truncatedBucket.length}} /  {{weightedBucket.length}} )</button>
     </div>
 </template>
 <script>
@@ -55,25 +55,22 @@
 
           return count;
         },
-        orderedBucket: function () {
-          let self = this;
-          if(this.bucket === 'empty') {
-            return null;
-          }
+        weightedBucket: function () {
+          var $documents = this.data.length;
+          var tfIdfList = {};
 
-
-          var $filteredBucket = [];
-
-          for(var key in this.bucket) {
-            if(this.bucket[key] > 2) {
-              $filteredBucket.push({word: key, count: this.bucket[key]})
+          for(var i = 0; i < $documents; i++) {
+            for(var key in this.data[i]) {
+              if(!tfIdfList.hasOwnProperty(key)) {
+                var docFrequency = this.data.filter(($document) => { return $document.hasOwnProperty(key)});
+                tfIdfList[key] = this.data[i][key] * Math.log($documents / docFrequency.length)
+              }
             }
           }
-
-          return $filteredBucket.sort(function(a,b){return b.count - a.count})
+          return Object.keys(tfIdfList).map((key) => { return {word: key, weight: tfIdfList[key]}}).sort(function(a,b){return b.weight - a.weight});
         },
         truncatedBucket: function () {
-          return this.orderedBucket && this.orderedBucket.length > 0 ? this.orderedBucket.slice(0, this.count) : this.orderedBucket
+          return this.weightedBucket && this.weightedBucket.length > 0 ? this.weightedBucket.slice(0, this.count) : this.weightedBucket
         }
       },
       methods: {
