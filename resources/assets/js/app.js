@@ -10,12 +10,17 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.moment = require('moment');
 
-import { MdField } from 'vue-material/dist/components'
+import { MdField, MdSteppers, MdButton } from 'vue-material/dist/components'
 import {store} from './store';
 import { loadProgressBar } from 'axios-progress-bar'
+var VueCookie = require('vue-cookie');
+// Tell Vue to use the plugin
+Vue.use(VueCookie);
 
 
 Vue.use(MdField);
+Vue.use(MdSteppers);
+Vue.use(MdButton);
 
 window.loadProgressBar = loadProgressBar
 /**
@@ -29,7 +34,7 @@ Vue.component('crawler-sidepanel', require('./components/crawler-sidepanel'));
 Vue.component('crawler-input', require('./components/crawler-input.vue'));
 Vue.component('crawler-analytics', require('./components/crawler-analytics.vue'));
 Vue.component('job-offer-log', require('./components/offer-log'));
-Vue.component('job-offer-modal', require('./components/offer-modal'));
+Vue.component('job-offer-modal', require('./components/modal'));
 Vue.component('job-offer-preview', require('./components/offer-previews'));
 
 const app = new Vue({
@@ -44,6 +49,12 @@ const app = new Vue({
     window.loadProgressBar();
     if(window.data && window.data.offers){
       this.$store.commit('setOffers', window.data.offers)
+    }
+
+    let welcomeCookie = this.$cookie.get('welcome');
+
+    if(!welcomeCookie) {
+      this.$store.commit('revealModal', {modal: null, type: 'welcome'});
     }
   }
 });
