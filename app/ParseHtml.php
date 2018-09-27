@@ -52,7 +52,7 @@ class ParseHtml
     private function extractNode ($node)
     {
         if($this->isValid){
-            $this->resultString .= $node->text();
+            $this->resultString .= ' ' . $node->text();
         }
         $this->isValid = true;
     }

@@ -12,6 +12,7 @@ use App\EnglishGrammar;
 class ClassifyKeywords
 {
     protected $classification;
+    protected $classCount;
     protected $englishGrammar;
 
     public function __construct(EnglishGrammar $englishGrammar)
@@ -32,7 +33,8 @@ class ClassifyKeywords
         return $this->removeFlags($this->englishGrammar->listArticles())
             ->removeFlags($this->englishGrammar->listPronouns())->removeFlags($this->englishGrammar->listPrepositions())
             ->removeFlags($this->englishGrammar->listAdverbs())->removeFlags($this->englishGrammar->listConjunctions())
-            ->removeFlags($this->englishGrammar->listInterjections())->removeFlags($this->englishGrammar->catchAll());
+            ->removeFlags($this->englishGrammar->listInterjections())->removeFlags($this->englishGrammar->catchAll())
+            ->removeFlags($this->englishGrammar->listStopWords());
     }
 
     private function removeFlags ($flag)
@@ -48,7 +50,7 @@ class ClassifyKeywords
         $classified_obj = [];
 
         foreach ($this->classification as $item) {
-            $classified_obj[$item] = preg_match_all('/\b'. strtolower($item) .'\b/', strtolower($text));
+            $classified_obj[$item] =  preg_match_all('/\b'. strtolower($item) .'\b/', strtolower($text)) / $this->classCount;
         }
 
 
@@ -61,36 +63,8 @@ class ClassifyKeywords
     private function stndizeList($text)
     {
         $list = explode(' ', $text);
-        $flags = [',', ' ', '  ', '?', '.', '!', '(', ')', "\n", '/', ':', '+', ';', '_','"', '*'];
-        $recycled = [];
-
-        //loop through list for the designated flags
-
-        for($i = 0; $i < count($list); $i++)
-        {
-         $list[$i] = str_replace($flags, ' ', strtolower($list[$i]));
-
-
-         //check for word splits
-
-         if(strpos($list[$i], ' ') || strpos($list[$i], '  ') || strpos($list[$i], '   ')){
-             $trash = array_filter(explode(' ', $list[$i]), function ($item){
-                 return $item && $item !== ' ' && $item !== '  ' && $item !== '   ';
-             });
-
-             //remove old key and add new values to recycling
-
-             $recycled = array_merge($recycled, $trash);
-
-             $list[$i] = '';
-         }
-        }
-
-        //combine filtered array and recycled array
-
-        $this->classification = array_merge($recycled, array_filter($list, function ($item){
-            return $item && $item !== ' ' && $item !== '  ';
-        }));
+        $this->classification = preg_grep("/^[a-zA-Z ]*$/", $list);
+        $this->classCount = count($this->classification);
 
         return $this;
     }
