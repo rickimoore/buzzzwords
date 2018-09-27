@@ -122,7 +122,7 @@
           this.sort = 'asc'
         },
         viewOffer: function (offer) {
-          this.$store.commit('revealModal', offer);
+          this.$store.commit('revealModal', {modal: offer, type: 'entry'});
         },
         validate: function (object) {
           if (object === null || object === '')
