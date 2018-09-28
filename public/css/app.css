@@ -616,9 +616,40 @@ p {
 
 .crawler--input-group {
   width: 100%;
+  height: 75px;
+  position: relative;
+}
+
+.crawler--input-group .input--notification {
+  width: 100%;
+  height: 35px;
+  position: absolute;
+  left: 0;
+  top: -35px;
+  padding: 10px;
+  padding-left: 125px;
+}
+
+.crawler--input-group .input--notification p {
+  color: white;
+}
+
+.crawler--input-group .red {
+  background-color: red;
+}
+
+.crawler--input-group .green {
+  background-color: #7FFA90;
+}
+
+.crawler--input-group .group--container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 99;
+  background-color: #FBF780;
   border-top: 1px solid #E0DC7C;
   border-bottom: 1px solid #E0DC7C;
-  height: 75px;
   padding-left: 125px;
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
@@ -650,7 +681,8 @@ p {
   left: 15%;
   top: -350px;
   text-align: left;
-  background-color: #ACFA7F;
+  background-color: #7FFA90;
+  padding: 10px;
 }
 
 .crawler--input-group .crawler--tut .tut--info {
@@ -669,7 +701,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  border-top: 30px solid #ACFA7F;
+  border-top: 30px solid #7FFA90;
   border-left: 30px solid transparent;
   border-right: 30px solid transparent;
 }
@@ -679,7 +711,7 @@ p {
   position: absolute;
   left: 1px;
   top: 0;
-  border-top: 29px solid #ACFA7F;
+  border-top: 29px solid #7FFA90;
   border-left: 29px solid transparent;
   border-right: 29px solid transparent;
 }
@@ -1582,6 +1614,10 @@ p {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.slide--container .underline {
+  text-decoration: underline;
 }
 
 .slide--container .md-field {

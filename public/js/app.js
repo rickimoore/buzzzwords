@@ -68533,6 +68533,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['tutPriority'],
@@ -68578,6 +68584,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     submitBucket: function submitBucket() {
       var _this3 = this;
 
+      this.isError = false;
       this.bucket.forEach(function ($item) {
         _this3.submitForm($item);
       });
@@ -68585,9 +68592,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     submitForm: function submitForm($link) {
       var _this4 = this;
 
-      this.isError = false;
       if (!this.isUrl($link)) {
-        return this.isError = true;
+        return this.isError = { type: 'url' };
       }
 
       var indexHistory = this.isInHistory($link);
@@ -68606,23 +68612,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this4.$store.commit('appendToClassList', $data);
           _this4.$store.commit('appendToBin', $link);
 
-          _this4.bucket.splice(_this4.bucket.findIndex(function ($item) {
-            return $item === $link;
-          }), 1);
+          _this4.removeItem($link);
         }
       }).catch(function (error) {
         console.log('error recieved', error);
       });
     },
+    removeItem: function removeItem($link) {
+      this.bucket.splice(this.bucket.findIndex(function ($item) {
+        return $item === $link;
+      }), 1);
+    },
     addToBucket: function addToBucket() {
       var _this5 = this;
 
+      this.isError = false;
       setTimeout(function () {
         if (_this5.bucket.indexOf(_this5.form.link, 0) > -1) {
+          if (_this5.bucket.length <= 1) {
+            _this5.isError = { type: 'count' };
+          }
           return _this5.form.link = '';
         }
         _this5.bucket.push(_this5.form.link);
         _this5.form.link = '';
+        if (_this5.bucket.length <= 1) {
+          _this5.isError = { type: 'count' };
+        }
       }, 500);
     },
     persistFromHistory: function persistFromHistory(index) {
@@ -68674,75 +68690,111 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "crawler-input--container" }, [
-    _c("div", { staticClass: "crawler--cta" }, [
-      _c("h1", [
-        _vm._v(
-          "Buzzwords are important for catching attention, so we will help you find yours."
-        )
-      ]),
-      _vm._v(" "),
-      _vm.isError ? _c("p", [_vm._v("Please enter valid url.")]) : _vm._e()
-    ]),
+    _vm._m(0),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "crawler--input-group" },
       [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.link,
-              expression: "form.link"
-            }
-          ],
-          attrs: { type: "text", placeholder: "Paste your job offer here..." },
-          domProps: { value: _vm.form.link },
-          on: {
-            paste: _vm.addToBucket,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "link", $event.target.value)
-            }
-          }
-        }),
+        _c("transition", { attrs: { name: "shortSlideUp" } }, [
+          _vm.isError
+            ? _c(
+                "div",
+                {
+                  staticClass: "input--notification",
+                  class: {
+                    red: _vm.isError.type === "url",
+                    green: _vm.isError.type === "count"
+                  }
+                },
+                [
+                  _c("p", [
+                    _vm._v(
+                      _vm._s(
+                        _vm.isError.type === "url"
+                          ? "Please enter a valid url..."
+                          : "Please add more job offers"
+                      )
+                    )
+                  ])
+                ]
+              )
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c(
-          "button",
-          {
-            staticClass: "submit--btn",
-            class: { "active--button": _vm.bucket.length > 0 || _vm.form.link },
-            on: { click: _vm.submitBucket }
-          },
-          [_vm._v("submit")]
-        ),
-        _vm._v(" "),
-        _c("transition", { attrs: { name: "shortSlideUp" } }, [
-          _vm.isTut
-            ? _c("div", { staticClass: "crawler--tut" }, [
-                _c("img", {
-                  attrs: { src: "/image/tutorials/giphy--buzz.gif", alt: "tut" }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "tut--info" }, [
-                  _c("p", [
-                    _vm._v("Get started by pasting your offer below...")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    { staticClass: "bzz--btn", on: { click: _vm.closeTut } },
-                    [_vm._v("Understood")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "caret" })
-                ])
-              ])
-            : _vm._e()
-        ])
+          "div",
+          { staticClass: "group--container" },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.link,
+                  expression: "form.link"
+                }
+              ],
+              attrs: {
+                type: "text",
+                placeholder: "Paste your job offer here..."
+              },
+              domProps: { value: _vm.form.link },
+              on: {
+                paste: _vm.addToBucket,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "link", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "submit--btn",
+                class: {
+                  "active--button": _vm.bucket.length > 0 || _vm.form.link
+                },
+                on: { click: _vm.submitBucket }
+              },
+              [_vm._v("submit")]
+            ),
+            _vm._v(" "),
+            _c("transition", { attrs: { name: "shortSlideUp" } }, [
+              _vm.isTut
+                ? _c("div", { staticClass: "crawler--tut" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "/image/tutorials/giphy--buzz.gif",
+                        alt: "tut"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "tut--info" }, [
+                      _c("p", [
+                        _vm._v("Get started by pasting your offer below...")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "bzz--btn",
+                          on: { click: _vm.closeTut }
+                        },
+                        [_vm._v("Understood")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "caret" })
+                    ])
+                  ])
+                : _vm._e()
+            ])
+          ],
+          1
+        )
       ],
       1
     ),
@@ -68756,15 +68808,37 @@ var render = function() {
             _vm._v(_vm._s(link.slice(0, 25) + "..."))
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "item--option" }, [
-            _vm._v("\n                ( x )\n            ")
-          ])
+          _c(
+            "div",
+            {
+              staticClass: "item--option",
+              on: {
+                click: function($event) {
+                  _vm.removeItem(link)
+                }
+              }
+            },
+            [_vm._v("\n                ( x )\n            ")]
+          )
         ])
       })
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "crawler--cta" }, [
+      _c("h1", [
+        _vm._v(
+          "Buzzwords are important for catching attention, so we will help you find yours."
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -69889,7 +69963,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       active: 0,
-      steps: [{ stat: false, label: 'fist', message: '<h1>Welcome to our beta, <br> buzzzwords!</h1>' }, { stat: false, label: 'second', message: '<h1>We believe, <br> marketing yourself for job opportunities <br> can be a pleasant experience. <br><br>So we design tools to help guide you.</h1>' }, { stat: false, label: 'signup', message: '<h1>Stay updated with our latest developments by joing our newsletter.</h1>' }, { stat: false, label: 'last', message: '<h1>We appreciate your help. <br><br> Thank You!</h1>' }],
+      steps: [{ stat: false, label: 'fist', message: '<h1>Welcome to our beta, <br> buzzzwords!</h1>' }, { stat: false, label: 'second', message: '<h1>We believe, <br> marketing yourself for job opportunities <br> can be a pleasant experience. <br><br>So we design tools to help guide you.</h1>' }, { stat: false, label: 'third', message: '<h1>The purpose of this tool <br> is to help you <span class="underline">analyze job offers</span> <br> in order to <span class="underline">identify key/buzzwords</span> <br> that you can add to your resume.</h1>' }, { stat: false, label: 'signup', message: '<h1>Stay updated with our latest developments <br> by joining our newsletter.</h1>' }, { stat: false, label: 'last', message: '<h1>We appreciate your help. <br><br> Thank You!</h1>' }],
       form: { email: '' }
     };
   },
