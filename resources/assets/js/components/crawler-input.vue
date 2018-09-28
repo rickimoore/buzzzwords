@@ -2,26 +2,32 @@
     <div class="crawler-input--container">
         <div class="crawler--cta">
             <h1>Buzzwords are important for catching attention, so we will help you find yours.</h1>
-            <p v-if="isError">Please enter valid url.</p>
         </div>
         <div class="crawler--input-group">
-            <input type="text" placeholder="Paste your job offer here..." @paste="addToBucket" v-model="form.link">
-            <button class="submit--btn" :class="{'active--button': bucket.length > 0 || form.link}" @click="submitBucket">submit</button>
             <transition name="shortSlideUp">
-                <div v-if="isTut" class="crawler--tut">
-                    <img src="/image/tutorials/giphy--buzz.gif" alt="tut">
-                    <div class="tut--info">
-                        <p>Get started by pasting your offer below...</p>
-                        <button @click="closeTut" class="bzz--btn">Understood</button>
-                        <div class="caret"></div>
-                    </div>
+                <div v-if="isError" :class="{'red': isError.type === 'url', 'green': isError.type === 'count'}" class="input--notification">
+                    <p>{{isError.type === 'url' ? 'Please enter a valid url...' : 'Please add more job offers'}}</p>
                 </div>
             </transition>
+            <div class="group--container">
+                <input type="text" placeholder="Paste your job offer here..." @paste="addToBucket" v-model="form.link">
+                <button class="submit--btn" :class="{'active--button': bucket.length > 0 || form.link}" @click="submitBucket">submit</button>
+                <transition name="shortSlideUp">
+                    <div v-if="isTut" class="crawler--tut">
+                        <img src="/image/tutorials/giphy--buzz.gif" alt="tut">
+                        <div class="tut--info">
+                            <p>Get started by pasting your offer below...</p>
+                            <button @click="closeTut" class="bzz--btn">Understood</button>
+                            <div class="caret"></div>
+                        </div>
+                    </div>
+                </transition>
+            </div>
         </div>
         <div class="crawler--input-list">
             <div class="input--item" v-for="link in bucket">
                 <div class="item--link">{{link.slice(0, 25) + '...'}}</div>
-                <div class="item--option">
+                <div class="item--option" @click="removeItem(link)">
                     ( x )
                 </div>
             </div>
@@ -63,14 +69,14 @@
           }
         },
         submitBucket: function () {
+          this.isError = false;
           this.bucket.forEach(($item) => {
             this.submitForm($item);
           })
         },
         submitForm: function ($link) {
-          this.isError = false;
           if(!this.isUrl($link)){
-            return this.isError = true;
+            return this.isError = {type: 'url'};
           }
 
           let indexHistory = this.isInHistory($link);
@@ -90,20 +96,30 @@
                 this.$store.commit('appendToClassList', $data);
                 this.$store.commit('appendToBin', $link)
 
-                this.bucket.splice(this.bucket.findIndex(($item) => $item === $link), 1)
+                this.removeItem($link);
               }
 
             }).catch(function (error) {
               console.log('error recieved', error)
             })
         },
+        removeItem: function ($link) {
+          this.bucket.splice(this.bucket.findIndex(($item) => $item === $link), 1)
+        },
         addToBucket: function () {
+          this.isError = false;
           setTimeout(() => {
             if(this.bucket.indexOf(this.form.link, 0) > -1){
+              if (this.bucket.length <= 1) {
+                this.isError = {type: 'count'}
+              }
               return this.form.link = '';
             }
             this.bucket.push(this.form.link);
             this.form.link = '';
+            if (this.bucket.length <= 1) {
+              this.isError = {type: 'count'}
+            }
           }, 500);
         },
         persistFromHistory: function (index) {
