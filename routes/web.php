@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'Controller@index');
+Route::get('/{id}', 'Controller@index');
 Route::post('/analyze', 'Controller@analayze');
 
 Route::resource('/offer-backlog', 'BacklogController');
