@@ -68067,9 +68067,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      popUps: ['/about', '/contact']
+    };
+  },
+  mounted: function mounted() {
+    if (this.popUps.indexOf(window.location.pathname) > -1) {
+      this.$store.commit('revealModal', { modal: window.location.pathname, type: 'info' });
+    }
+  },
+
   methods: {
     toggleMenu: function toggleMenu() {
       this.$store.commit('togglePanel', !this.$store.state.isSidePanelActive);
+    },
+    toggleModal: function toggleModal($location) {
+      this.$store.commit('revealModal', { modal: $location, type: 'info' });
     }
   }
 });
@@ -68085,7 +68099,41 @@ var render = function() {
   return _c("nav", { staticClass: "crawler--nav" }, [
     _vm._m(0),
     _vm._v(" "),
-    _vm._m(1),
+    _c("ul", { staticClass: "nav" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c("li", [
+        _c(
+          "a",
+          {
+            attrs: { href: "/about" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.toggleModal("/about")
+              }
+            }
+          },
+          [_vm._v("About")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c(
+          "a",
+          {
+            attrs: { href: "/contact" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.toggleModal("/contact")
+              }
+            }
+          },
+          [_vm._v("Contact")]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "nav--mobile-btn" }, [
       _c("img", {
@@ -68110,13 +68158,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "nav" }, [
-      _c("li", [_vm._v("Home")]),
-      _vm._v(" "),
-      _c("li", [_vm._v("About")]),
-      _vm._v(" "),
-      _c("li", [_vm._v("Contact")])
-    ])
+    return _c("li", [_c("a", { attrs: { href: "/" } }, [_vm._v("Home")])])
   }
 ]
 render._withStripped = true
@@ -69554,9 +69596,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 Vue.component('offer-entry', __webpack_require__(191));
 Vue.component('welcome-screen', __webpack_require__(194));
+Vue.component('buzz-info', __webpack_require__(206));
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data', 'state'],
   data: function data() {
@@ -70168,6 +70212,10 @@ var render = function() {
                   _vm._v(" "),
                   _vm.data.type === "welcome" && _vm.isModal
                     ? _c("welcome-screen")
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.data.type === "info" && _vm.isModal
+                    ? _c("buzz-info", { attrs: { type: _vm.data.modal } })
                     : _vm._e()
                 ],
                 1
@@ -70368,6 +70416,194 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(207)
+/* template */
+var __vue_template__ = __webpack_require__(208)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/modals/info.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-40aadc20", Component.options)
+  } else {
+    hotAPI.reload("data-v-40aadc20", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 207 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['type']
+});
+
+/***/ }),
+/* 208 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "buzz--info modal" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "info--body" },
+      [
+        _vm.type === "/about"
+          ? [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "So we design tools to help guide you. We are working hard with headhunters and recruiters around the world to understand what it takes to make the perfect candidate. Our goal is to take those tips and to guide users to their most marketable potential."
+                )
+              ])
+            ]
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.type === "/contact"
+          ? [
+              _c("h1", [_vm._v("We want to get in touch!")]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "Please reach out to our social media or send us an email anytime."
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(2)
+            ]
+          : _vm._e()
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "info--header" }, [
+      _c("img", { attrs: { src: "/image/logo/buzzword.png", alt: "buzz" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", [
+      _vm._v("We believe, "),
+      _c("br"),
+      _vm._v(" marketing yourself for job opportunities "),
+      _c("br"),
+      _vm._v(" can be a pleasant experience.")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "social" }, [
+      _c("li", [
+        _c("a", { attrs: { href: "https://www.facebook.com/mavrik.dev" } }, [
+          _c("img", {
+            attrs: { src: "/image/icons/001-facebook.svg", alt: "" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c("a", { attrs: { href: "https://www.instagram.com/buzzz_word/" } }, [
+          _c("img", {
+            attrs: { src: "/image/icons/002-instagram.svg", alt: "" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _c("a", { attrs: { href: "/" } }, [
+          _c("img", { attrs: { src: "/image/icons/003-email.svg", alt: "" } })
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-40aadc20", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
