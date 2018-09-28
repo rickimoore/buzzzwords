@@ -26,6 +26,9 @@
   line-height: 1.2;
   @include flex();
   @include flex-center();
+  .underline {
+    text-decoration: underline;
+  }
   .md-field {
     margin-top: 30px;
     width: 75%;

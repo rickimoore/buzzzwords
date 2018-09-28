@@ -26,7 +26,8 @@
           steps: [
             {stat: false, label: 'fist', message: '<h1>Welcome to our beta, <br> buzzzwords!</h1>'},
             {stat: false, label: 'second', message: '<h1>We believe, <br> marketing yourself for job opportunities <br> can be a pleasant experience. <br><br>So we design tools to help guide you.</h1>'},
-            {stat: false, label: 'signup', message: '<h1>Stay updated with our latest developments by joing our newsletter.</h1>'},
+            {stat: false, label: 'third', message: '<h1>The purpose of this tool <br> is to help you <span class="underline">analyze job offers</span> <br> in order to <span class="underline">identify key/buzzwords</span> <br> that you can add to your resume.</h1>'},
+            {stat: false, label: 'signup', message: '<h1>Stay updated with our latest developments <br> by joining our newsletter.</h1>'},
             {stat: false, label: 'last', message: '<h1>We appreciate your help. <br><br> Thank You!</h1>'}],
           form: {email: ''}
         }
