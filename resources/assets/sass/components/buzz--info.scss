@@ -1,0 +1,25 @@
+.buzz--info {
+  padding: 50px 25px;
+  line-height: 1;
+  .info--body {
+    @include flex();
+    @include flex-center();
+    p {
+      line-height: 1.5;
+      margin-top: 25px;
+      max-width: 70%;
+    }
+    .social{
+      margin-top: 25px;
+      @include flex();
+      @include flex-row(nowrap);
+      img {
+        width: 25px;
+        cursor: pointer;
+      }
+      > * + *{
+        margin-left: 15px;
+      }
+    }
+  }
+}
