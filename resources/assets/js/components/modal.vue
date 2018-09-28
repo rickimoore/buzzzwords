@@ -7,6 +7,7 @@
             <transition name="shortSlideUp">
                 <offer-entry v-if="data.type === 'entry' && isModal" :offer="data.modal"></offer-entry>
                 <welcome-screen v-if="data.type === 'welcome' && isModal"></welcome-screen>
+                <buzz-info v-if="data.type === 'info' && isModal" :type="data.modal"></buzz-info>
             </transition>
         </div>
     </div>
@@ -14,6 +15,7 @@
 <script>
   Vue.component('offer-entry', require('../components/modals/offer-entry.vue'));
   Vue.component('welcome-screen', require('../components/modals/welcome'));
+  Vue.component('buzz-info', require('../components/modals/info'));
     export default {
       props: ['data', 'state'],
       data: function () {
